@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  redis-stack:
+    image: redis/redis-stack-server:latest
+    container_name: redis-stack-johan
+    ports:
+      - "6379:6379"      # Expose Redis Stack server on port 6379
+      - "13333:8001"      # Expose RedisInsight on port 13333
+    volumes:
+      - ./local-data:/data    # Persist Redis data to a local directory
+      - ./local-redis-stack.conf:/redis-stack.conf  # Optionally mount custom Redis config
+    restart: unless-stopped    # Automatically restart the container if it stops
+  elasticsearch:
+    image: elasticsearch  # Replace 'tag' with the appropriate Elasticsearch version tag
+    container_name: elasticsearch
+    networks:
+      - somenetwork            # Ensure this network exists or is created
+    ports:
+      - "9200:9200"            # Expose port 9200 for HTTP traffic
+      - "9300:9300"            # Expose port 9300 for internal cluster communication
+    environment:
+      - discovery.type=single-node  # Configure Elasticsearch as a single-node cluster
+    restart: unless-stopped       # Automatically restart the container if it stops
