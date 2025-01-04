@@ -1,0 +1,127 @@
+swagger: "2.0"
+info:
+  title: "Rick and Morty API"
+  description: "API para obtener información sobre los personajes de Rick and Morty"
+  version: "1.0.0"
+host: "rickandmortyapi.com"
+schemes:
+  - "https"
+basePath: "/api"
+paths:
+  /character:
+    get:
+      summary: "Obtener todos los personajes"
+      description: "Recupera una lista de todos los personajes de Rick and Morty"
+      operationId: "getAllCharacters"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "page"
+          in: "query"
+          description: "Número de página para la paginación"
+          required: false
+          type: "integer"
+        - name: "name"
+          in: "query"
+          description: "Filtrar por nombre de personaje"
+          required: false
+          type: "string"
+        - name: "status"
+          in: "query"
+          description: "Filtrar por estado de personaje ('alive', 'dead' o 'unknown')"
+          required: false
+          type: "string"
+        - name: "species"
+          in: "query"
+          description: "Filtrar por especie de personaje"
+          required: false
+          type: "string"
+        - name: "type"
+          in: "query"
+          description: "Filtrar por tipo de personaje"
+          required: false
+          type: "string"
+        - name: "gender"
+          in: "query"
+          description: "Filtrar por género de personaje ('female', 'male', 'genderless' o 'unknown')"
+          required: false
+          type: "string"
+      responses:
+        200:
+          description: "Lista de personajes recuperada exitosamente"
+          schema:
+            type: "object"
+            properties:
+              info:
+                type: "object"
+                properties:
+                  count:
+                    type: "integer"
+                    description: "Número total de personajes"
+                  pages:
+                    type: "integer"
+                    description: "Número total de páginas"
+                  next:
+                    type: "string"
+                    description: "URL de la siguiente página"
+                  prev:
+                    type: "string"
+                    description: "URL de la página anterior"
+              results:
+                type: "array"
+                items:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "integer"
+                      description: "ID del personaje"
+                    name:
+                      type: "string"
+                      description: "Nombre del personaje"
+                    status:
+                      type: "string"
+                      description: "Estado del personaje"
+                    species:
+                      type: "string"
+                      description: "Especie del personaje"
+                    type:
+                      type: "string"
+                      description: "Tipo del personaje"
+                    gender:
+                      type: "string"
+                      description: "Género del personaje"
+                    origin:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          description: "Nombre del lugar de origen"
+                        url:
+                          type: "string"
+                          description: "URL del lugar de origen"
+                    location:
+                      type: "object"
+                      properties:
+                        name:
+                          type: "string"
+                          description: "Nombre de la ubicación actual"
+                        url:
+                          type: "string"
+                          description: "URL de la ubicación actual"
+                    image:
+                      type: "string"
+                      description: "URL de la imagen del personaje"
+                    episode:
+                      type: "array"
+                      items:
+                        type: "string"
+                      description: "Lista de episodios en los que aparece el personaje"
+                    url:
+                      type: "string"
+                      description: "URL del personaje"
+                    created:
+                      type: "string"
+                      format: "date-time"
+                      description: "Fecha de creación del personaje"
+      x-google-backend:
+        address: "https://rickandmortyapi.com"
