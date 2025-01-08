@@ -1,4 +1,3 @@
-version: '3.8'
 
 services:
   redis-stack:
@@ -11,8 +10,15 @@ services:
       - ./local-data:/data    # Persist Redis data to a local directory
       - ./local-redis-stack.conf:/redis-stack.conf  # Optionally mount custom Redis config
     restart: unless-stopped    # Automatically restart the container if it stops
+  redisinsight:
+    image: redislabs/redisinsight:latest
+    ports:
+      - '5540:5540'
+    volumes:
+      - ./Users/ajeetraina/data/redisinsight:/db 
+    restart: unless-stopped 
   elasticsearch:
-    image: elasticsearch  # Replace 'tag' with the appropriate Elasticsearch version tag
+    image: docker.elastic.co/elasticsearch/elasticsearch-wolfi:8.17.0  # Replace 'tag' with the appropriate Elasticsearch version tag
     container_name: elasticsearch
     networks:
       - somenetwork            # Ensure this network exists or is created
@@ -22,3 +28,6 @@ services:
     environment:
       - discovery.type=single-node  # Configure Elasticsearch as a single-node cluster
     restart: unless-stopped       # Automatically restart the container if it stops
+networks:
+  somenetwork:
+  
