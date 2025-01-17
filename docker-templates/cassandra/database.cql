@@ -85,3 +85,6 @@ SELECT * FROM customer_purchase_history WHERE customer_id = 'cliente-uuid';
 
 -- Ver el total de ventas por cliente
 SELECT customer_id, SUM(total_amount) FROM orders GROUP BY customer_id;
+
+
+
